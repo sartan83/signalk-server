@@ -1,0 +1,33 @@
+{
+  "name": "@signalk/engine-health",
+  "version": "1.0.0",
+  "description": "Predictive maintenance plugin for Signal K server: dynamic threshold anomaly detection on main engine data.",
+  "main": "dist/index.js",
+  "keywords": [
+    "signalk-node-server-plugin",
+    "signalk-category-notifications",
+    "signalk",
+    "engine",
+    "propulsion",
+    "predictive-maintenance",
+    "anomaly-detection"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SignalK/signalk-server.git",
+    "directory": "packages/engine-health-plugin"
+  },
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc",
+    "watch": "npm run build -- -w",
+    "prettier": "prettier -w src/",
+    "lint": "eslint --fix",
+    "format": "npm run prettier && npm run lint",
+    "prepublishOnly": "npm run build",
+    "test": "npm run build"
+  },
+  "dependencies": {
+    "@signalk/server-api": "^2.31.1"
+  }
+}

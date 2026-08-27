@@ -1,0 +1,141 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Engine Health (Built-in)",
+    "description": "Predictive maintenance for the main engine: dynamic threshold anomaly detection.",
+    "termsOfService": "http://signalk.org/terms/",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "externalDocs": {
+    "url": "http://signalk.org/specification/",
+    "description": "Signal K specification."
+  },
+  "servers": [
+    {
+      "url": "/plugins/engine-health"
+    }
+  ],
+  "tags": [
+    {
+      "name": "status",
+      "description": "Anomaly detection status"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "PathStatus": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "example": "propulsion.mainEngine.temperature"
+          },
+          "samples": {
+            "type": "number",
+            "description": "Number of values currently in the sliding window."
+          },
+          "mean": {
+            "type": "number",
+            "nullable": true,
+            "description": "Moving average, null until the window is full."
+          },
+          "stdDev": {
+            "type": "number",
+            "nullable": true,
+            "description": "Standard deviation, null until the window is full."
+          },
+          "value": {
+            "type": "number",
+            "nullable": true,
+            "description": "Value of the last reading."
+          },
+          "consecutiveAnomalies": {
+            "type": "number"
+          },
+          "notificationState": {
+            "type": "string",
+            "enum": ["normal", "alert", "alarm"]
+          },
+          "lastAnomaly": {
+            "type": "object",
+            "nullable": true,
+            "properties": {
+              "value": {
+                "type": "number"
+              },
+              "mean": {
+                "type": "number"
+              },
+              "stdDev": {
+                "type": "number"
+              },
+              "timestamp": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "notificationState": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "401Unauthorised": {
+        "description": "Unauthorised",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "state": {
+                  "type": "string",
+                  "enum": ["FAILED"]
+                },
+                "statusCode": {
+                  "type": "number",
+                  "enum": [401]
+                },
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/status": {
+      "get": {
+        "tags": ["status"],
+        "summary": "Anomaly detection status for all monitored paths.",
+        "description": "Returns the sliding window statistics and the last detected anomaly for each monitored path.",
+        "responses": {
+          "200": {
+            "description": "Status of each monitored path, keyed by Signal K path.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/PathStatus"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401Unauthorised"
+          }
+        }
+      }
+    }
+  }
+}

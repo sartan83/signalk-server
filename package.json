@@ -71,6 +71,7 @@
     "packages/server-api",
     "packages/path-metadata",
     "packages/resources-provider-plugin",
+    "packages/engine-health-plugin",
     "packages/typedoc-theme",
     "packages/assemblyscript-plugin-sdk"
   ],
@@ -78,6 +79,7 @@
     "@assemblyscript/loader": "^0.28.19",
     "@astronautlabs/mdns": "^1.0.10",
     "@signalk/course-provider": "^1.4.0",
+    "@signalk/engine-health": "^1.0.0",
     "@signalk/n2k-signalk": ">=4.1.0-beta",
     "@signalk/nmea0183-signalk": "^3.20.0",
     "@signalk/resources-provider": "^1.5.2",
