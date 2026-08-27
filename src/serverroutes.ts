@@ -32,7 +32,7 @@ import express, { IRouter, NextFunction, Request, Response } from 'express'
 import { sendZip } from './zip'
 import fs from 'fs'
 import { forIn, get, isNumber, isUndefined, set, uniq, unset } from 'lodash'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import ncpI from 'ncp'
 import os from 'os'
 import path from 'path'
@@ -953,7 +953,7 @@ module.exports = function (
             bcrypt.compare(
               password,
               hashToCompare,
-              (err: Error | null, matches: boolean) => {
+              (err: Error | null, matches?: boolean) => {
                 if (err) {
                   console.error(err)
                   res.status(500).send('Unable to verify credentials')
@@ -2460,7 +2460,7 @@ module.exports = function (
         })
       sendZip(res, {
         files,
-        filename: `signalk-${moment().format('MMM-DD-YYYY-HHTmm')}.backup`
+        filename: `signalk-${dayjs().format('MMM-DD-YYYY-HHTmm')}.backup`
       })
     })
   })

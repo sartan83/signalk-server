@@ -72,6 +72,7 @@
     "@signalk/nmea0183-utilities": "^1.1.1",
     "@signalk/signalk-schema": "^1.5.0",
     "any-shell-escape": "^0.1.1",
+    "dayjs": "^1.11.21",
     "file-timestamp-stream": "^2.2.4",
     "lodash": "^4.18.1",
     "moment": "^2.30.1",
