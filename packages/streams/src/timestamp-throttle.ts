@@ -1,5 +1,8 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
+import customParseFormat from 'dayjs/plugin/customParseFormat'
 import { Transform, TransformCallback } from 'stream'
+
+dayjs.extend(customParseFormat)
 
 interface TimestampMessage {
   timestamp: string
@@ -13,7 +16,7 @@ interface TimestampThrottleOptions {
 
 function defaultGetMilliseconds(msg: TimestampMessage): number {
   // 2014-08-15-16:00:00.083
-  return moment(msg.timestamp, 'YYYY-MM-DD-HH:mm:ss.SSS').valueOf()
+  return dayjs(msg.timestamp, 'YYYY-MM-DD-HH:mm:ss.SSS').valueOf()
 }
 
 export default class TimestampThrottle extends Transform {

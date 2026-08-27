@@ -14,7 +14,7 @@
  * limitations under the License.
 */
 
-const moment = require('moment')
+const dayjs = require('dayjs')
 const path = require('path')
 const { getFullLogDir, listLogFiles } = require('@signalk/streams/logging')
 import { SERVERROUTESPREFIX } from '../constants'
@@ -80,7 +80,7 @@ function mountApi(app) {
         ? app.config.vesselMMSI
         : ''
     const sanitizedBoatName = boatName.replace(/\W/g, '_')
-    const zipFileName = `sk-logs-${sanitizedBoatName}-${moment().format('YYYY-MM-DD-HH-mm')}`
+    const zipFileName = `sk-logs-${sanitizedBoatName}-${dayjs().format('YYYY-MM-DD-HH-mm')}`
 
     sendZip(res, {
       files: [{ path: getFullLogDir(app), name: zipFileName }],

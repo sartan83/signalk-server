@@ -1,5 +1,5 @@
 const debugCore = require('debug')
-const moment = require('moment')
+const dayjs = require('dayjs')
 const path = require('path')
 const fs = require('fs')
 const { atomicWriteFileSync } = require('./atomicWrite')
@@ -27,7 +27,7 @@ module.exports = function (app) {
 
   function storeOutput(output, isError) {
     const data = {
-      ts: moment().format('MMM DD HH:mm:ss'),
+      ts: dayjs().format('MMM DD HH:mm:ss'),
       row: output
     }
     if (isError) {
